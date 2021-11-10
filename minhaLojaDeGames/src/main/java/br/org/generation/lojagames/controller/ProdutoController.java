@@ -21,14 +21,13 @@ import br.org.generation.lojagames.model.Produto;
 import br.org.generation.lojagames.repository.ProdutoRepository;
 
 @RestController
-@RequestMapping ("/produto")
-@CrossOrigin
+@RequestMapping("/produto")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController {
-	
-	
-	@Autowired 
+
+	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Produto>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
