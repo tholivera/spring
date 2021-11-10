@@ -1,26 +1,36 @@
 package br.org.generation.farmacia.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table (name = "tb_categoria")
+@Table(name = "tb_categoria")
 public class Categoria {
-	
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@NotNull (message = "O nome não pode ficar em branco.")
-	@Size (min = 3, max = 255, message = "O nomde deve ter de 3 a 255 caracteres.")
+
+	@NotNull(message = "O nome não pode ficar em branco.")
+	@Size(min = 3, max = 255, message = "O nomde deve ter de 3 a 255 caracteres.")
 	private String nome;
-	
-	private String descrição;
+
+	private String descricao;
+
+	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("categoria")
+	private List<Produto> produto;
 
 	public long getId() {
 		return id;
@@ -39,11 +49,11 @@ public class Categoria {
 	}
 
 	public String getDescrição() {
-		return descrição;
+		return descricao;
 	}
 
-	public void setDescrição(String descrição) {
-		this.descrição = descrição;
+	public void setDescrição(String descricao) {
+		this.descricao = descricao;
 	}
 
 }
