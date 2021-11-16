@@ -44,6 +44,16 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 
+	@GetMapping("/menor_preco/{preco}")
+	public ResponseEntity<List<Produto>> getByPrecoMenorQue(@PathVariable float preco) {
+		return ResponseEntity.ok(produtoRepository.findByPrecoLessThanOrderByPrecoDesc(preco));
+	}
+
+	@GetMapping("/maior_preco/{preco}")
+	public ResponseEntity<List<Produto>> getByPrecoMaiorQue(@PathVariable float preco) {
+		return ResponseEntity.ok(produtoRepository.findByPrecoGreaterThanOrderByPreco(preco));
+	}
+
 	@PostMapping
 	public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
